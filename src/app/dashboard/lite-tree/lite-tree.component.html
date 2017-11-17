@@ -1,0 +1,26 @@
+<style>
+  ul>li {
+    list-style-type: none;
+  }
+
+  .hd {
+    cursor: pointer
+  }
+
+  .fa {
+    width: .8rem;
+  }
+</style>
+
+
+<ul (click)="$event.stopPropagation()">
+  <li *ngFor="let item of treeInfo">
+    <i *ngIf="item.children.length>0" class="fa fa-sm hd" [class.fa-caret-right]="item.collapsed" [class.fa-caret-down]="!item.collapsed"
+      (click)="item.collapsed=!item.collapsed"></i>
+    <input type="checkbox" (change)="itemClicked(item)" [id]="item.text" [(ngModel)]="item.checked">
+    <label [for]="item.text">{{item.text}} </label>
+    <ng-container *ngIf="item.children&&item.children.length>0">
+      <app-lite-tree [treeInfo]="item.children" [hidden]="item.collapsed"></app-lite-tree>
+    </ng-container>
+  </li>
+</ul>
